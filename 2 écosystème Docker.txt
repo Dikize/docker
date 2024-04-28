@@ -1,0 +1,74 @@
+-----> Le Docker Engine ou moteur Docker est une application sur un modèle client / serveur.
+
+---- Il est composé de trois parties principales :
+
+---> 1 - serveur dockerd
+
+Le serveur dockerd qui est un service, également appelé démon, qui est exécuté en permanence. 
+C'est lui qui va créer et gérer tous les objets Docker : par exemples les images, les conteneurs, les réseaux et les volumes.
+
+
+---> 2 - API REST
+
+L'API REST spécifie les interfaces que les programmes peuvent utiliser pour communiquer avec le service dockerd.
+
+
+---> 3 - Le client (CLI)
+
+Le client (un CLI pour command line interface) permet d'exécuter des commandes Docker. 
+Le CLI traduit les commandes entrées par l'utilisateur en requêtes pour l'API REST.
+
+
+
+-----> Premier aperçu des objets Docker
+
+
+---> Les images
+
+Une image Docker est un schéma en lecture seule qui contient les instructions pour créer un conteneur Docker.
+
+Le plus souvent, une image est elle-même basée sur une autre image avec des configurations spécifiques.
+
+Par exemple, il est possible de prendre une image Node.js et d'ajouter les fichiers nécessaires au fonctionnement d'une application.
+
+Pour créer une image, il faut utiliser un fichier spécifique appelé Dockerfile qui a une syntaxe particulière permettant de définir les étapes nécessaires à la création de l'image.
+
+Chaque instruction dans un Dockerfile permet de créer une couche dans l'image.
+
+Lorsque qu'on modifie le Dockerfile et qu'on rebuilde l'image, seules les couches modifiées sont rebuild.
+
+
+
+---> Les conteneurs
+
+Un conteneur est une instance d'une image en cours d'exécution qui peut prendre des options de configuration passées lors du lancement.
+
+On peu donc avoir de nombreux conteneurs à partir de la même image.
+
+C'est la même logique avec un programme qu'on peu lancer plusieurs fois en même temps créant ainsi plusieurs processus.
+
+Pour créer, démarrer, arrêter, déplacer ou supprimer un conteneur il faut utiliser le CLI.
+
+Il est possible de connecter un conteneur à un ou plusieurs réseaux, il est également possible de lui attacher un ou plusieurs volumes de stockage.
+
+Par défaut, un conteneur est isolé des autres conteneurs et de la machine hôte. Il est bien sûr possible de paramétrer cette isolation en modifiant les réseaux auxquels le conteneur est connecté, le stockage etc.
+
+
+---> Les volumes
+
+Les volumes permettent aux conteneurs de stocker des données.
+
+Ils sont initialisés lors de la création d'un conteneur.
+
+Ils permettent de persister et de partager des données d'un conteneur.
+
+Ces volumes sont stockés en dehors du système UnionFS. Ils permettent en effet de conserver des données même si un conteneur est supprimé, mis à jour ou rechargé.
+
+
+--------#>Scaler avec Docker
+
+
+--> Exécuter une application multi-conteneurs avec Docker compose
+
+
+--> Utiliser un orchestrateur pour du multi-hôte avec Docker swarm ou Kubernetes

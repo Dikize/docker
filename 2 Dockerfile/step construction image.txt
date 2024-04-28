@@ -1,0 +1,40 @@
+Format du Dockerfile
+
+écrire des commentaires en les faisant précéder d'un #.
+
+Toutes les instructions sont en lettres majuscules.
+
+Les arguments sont passés à chaque instruction et peuvent être écrit sur plusieurs lignes pour plus de lisibilité en utilisant des \ :
+
+syntaxe : INSTRUCTION argument1 argument2
+
+
+-----> Fonctionnement du build d'une image
+
+-- Lorsque le démon Docker exécute chaque instruction, il crée une couche (layer) et la sauvegarde dans une nouvelle image si cela est nécessaire.
+
+-- En effet, une image Docker est une pile de couches en lecture seule qui représentent les instructions du Dockerfile
+
+Ces couches superposées comportent uniquement les différences par rapport à la couche précédente. C'est ce qui les rend légères et performantes.
+
+Reprenons par exemple :
+FROM alpine
+RUN apk add --update nodejs
+COPY ./app.js /app/
+CMD [ "node", "/app/app.js" ]
+
+
+L'instruction FROM crée une couche qui a pour hash d6.... contenant l'image de base alpine:latest.
+
+Ensuite, un conteneur intermédiaire est créé à partir de cette image de base pour exécuter l'installation de nodejs. Ce conteneur a accès à une couche avec les droits d'écriture afin d'effectuer les modifications spécifiées par l'instruction (ici l'installation de Node). Une fois l'installation terminée, le conteneur est supprimé et une capture des différences sur le système de fichiers avec l'image précédente est sauvegardée dans une image dont le hash est b2f...
+
+Puis, depuis la nouvelle image le démon copie le contenu du contexte sur la machine hôte avec le chemin ./app.js dans /app/. Il n'a pas besoin d'exécuter de conteneur intermédiaire car il n'y a rien à exécuter, il suffit d'ajouter les nouveaux fichiers et de sauvegarder les différences dans une nouvelle image avec le hash a2b...
+
+Enfin, il ajoute la commande par défaut et l'exécute dans un conteneur intermédiaire. Il sauvegarde enfin la commande dans une nouvelle image avec le hash 6c2...
+
+Comme il n'y a plus d'instructions, cette dernière image est le résultat du build et elle est donc taguée si vous avez passez l'option -t dans la commande de build.
+
+Ici le tag est test:latest.
+
+
+-----> 

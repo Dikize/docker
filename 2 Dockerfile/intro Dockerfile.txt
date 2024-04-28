@@ -1,0 +1,35 @@
+-----> Un Dockerfile contient les instructions permettant à Docker de construire (build) une image automatiquement.
+
+Ce fichier contient donc toutes les commandes nécessaires à la construction de l'image que vous souhaitez.
+
+Comme nous le verrons un Dockerfile est constituée de trois parties :
+
+1 - Une image de base. C'est l'image à partir de laquelle vous allez effectuer les modifications pour créer votre image. Vous n'allez en effet pas créer un système d'exploitation tout seul !
+
+2 - Les instructions. Elles sont des commandes Docker permettant de détailler toutes les modifications à apporter à l'image de base pour aboutir à votre image finale, par exemple votre application backend.
+
+3 - L'action. C'est la commande qui est exécutée par défaut lorsque l'image sera lancée dans un conteneur.
+
+
+---> Construire une image
+
+Pour créer une image à partir d'un Dockerfile il faut la build. Pour ce faire, il suffit d'utiliser docker image build CHEMIN.
+
+Le processus de construction d'une image (build) utilise un Dockerfile et un contexte.
+
+Le contexte est l'ensemble des fichiers contenus dans le chemin passé à la commande docker image build.
+
+par exemple lors du build sorti terminal :
+# Sending build context to Docker daemon  3.51 MB
+
+Cela signifie que les fichiers et les dossier contenus dans le chemin passé en argument à la commande font 3,51 Mo.
+
+C'est pour cette raison qu'il faut créer le Dockerfile dans le dossier d'application, ou ici pour tester, dans un dossier à part. Si on crée le Dockerfile directement dans le répertoire racine /, l'ensemble du disque dur est envoyé comme contexte au démon!
+
+Le build est effectué par le démon Docker.
+
+
+
+---> Taguer une image (donner un nom)
+
+---# docker build -t node:latest .

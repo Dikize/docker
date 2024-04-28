@@ -1,0 +1,40 @@
+-----> Le Docker est une surcouche et d'une API permettant de contrôler des fonctionnalités bas niveau du noyau Linux.
+
+-- Docker est écrit en langage Go et utilise toutes les fonctionnalités Linux qui sont :
+
+
+---> Les namespaces
+
+Docker utilise les namespaces Linux qui permettent de créer des espaces isolés sur un système d'exploitation Linux.
+
+C'est cette fonctionnalité de Linux qui confère aux conteneurs leur isolation. Chaque aspect d'un containeur est exécuté dans un namespace qui lui est propre et auquel seul ce dernier peut accéder.
+
+Docker utilise ainsi des namespaces pour :
+
+-- l'isolation des processus du conteneur (PID namespace)
+
+-- l'isolation des interfaces réseaux du conteneur (NET namespace)
+
+-- l'isolation des ressources de communications inter-processus (IPC namespace)
+
+-- l'isolation du système de fichiers (MNP namespace)
+
+-- l'isolation des identifiants du noyau et des versions (UTS namespace) qui permet notamment d'avoir un hostname différent pour les conteneurs.
+
+
+---> Les Cgroups
+
+Docker utilise également les control groups (cgroups).
+
+Cette technologie Linux permet de limiter l'accès aux ressources à des processus. Grâce à cela, Docker partage les ressources système disponibles entre tous les conteneurs (RAM, CPU, accès réseaux et lecture / écriture disques etc).
+
+Il est également possible, grâce à cette technologie, de limiter les ressources allouées à chaque conteneur.
+
+
+---> UnionFS
+
+UnionFS (pour Union File System) est un type de système de fichiers pour Linux.
+
+Suivant la distribution Linux, Docker utilise l'une des implémentations disponibles : AUFS, btrfs, vfs ou DeviceMapper.
+
+Ces systèmes de fichiers fonctionnent en créant des couches (layers). Ils sont au coeur des images Docker et leur permettent d'être légères et très rapides.
